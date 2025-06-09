@@ -12,5 +12,5 @@ add_parser.add_argument('description', help='description of the task')
 args = parser.parse_args()
 
 if args.commands == 'add':
-    results = task_manager.add_task(args.description)
-    print(results)
+    task_manager.path_exists()
+    task_manager.add_task(args.description)
