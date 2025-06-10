@@ -104,3 +104,27 @@ class TestTaskManager(unittest.TestCase):
 
         self.assertEqual(test_result[0]['status'], 'done')
         self.assertNotEqual(test_result[0]['updatedAt'], test_data[0]['updatedAt'])
+
+    def test_mark_task_in_progress(self):
+        """Tests if a task is marked as in-progress"""
+        test_path = "test_task.json"
+        test_task_manager = TaskManager(test_path)
+
+        test_data = [
+            {
+                'id': 1,
+                'description': 'Do some coding',
+                'status': 'todo',
+                'createdAt': '10/06/2025 18:19:42',
+                'updatedAt': '10/06/2025 18:19:42'
+            }
+        ]
+
+        mocked_open = mock_open(read_data=json.dumps(test_data))
+
+        with patch("builtins.open", mocked_open):
+            with patch("json.dump") as mock_json_dump:
+                test_result = test_task_manager.mark_task_in_progress(1)
+        
+        self.assertEqual(test_result[0]['status'], 'in-progress')
+        self.assertNotEqual(test_result[0]['updatedAt'], test_data[0]['updatedAt'])
