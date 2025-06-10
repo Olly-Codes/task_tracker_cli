@@ -9,15 +9,15 @@
   {
     "id": 2,
     "description": "Make jelly",
-    "status": "todo",
+    "status": "done",
     "createdAt": "10/06/2025 18:19:42",
-    "updatedAt": "10/06/2025 18:19:42"
+    "updatedAt": "10/06/2025 19:25:10"
   },
   {
     "id": 3,
     "description": "Hello there",
-    "status": "todo",
+    "status": "done",
     "createdAt": "10/06/2025 18:19:47",
-    "updatedAt": "10/06/2025 18:34:06"
+    "updatedAt": "10/06/2025 19:16:16"
   }
 ]

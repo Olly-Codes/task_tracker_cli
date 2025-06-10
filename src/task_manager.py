@@ -11,15 +11,17 @@ class TaskManager():
         self.filepath = filepath
         self.path = Path(self.filepath)
 
-    def path_exists(self):
-        """Check if file exists"""
+        self.task_status = ['done', 'in-progress']
+
+    def path_exists(self) -> bool:
+        """Check if file path exists"""
         if not self.path.exists():
             with open(self.path, 'w') as f:
                 json.dump([], f)
             return True
     
-    def add_task(self, description):
-        """Adds a task to the json file"""
+    def add_task(self, description: str) -> list:
+        """Adds a task to json file"""
 
         try:
             if self.path_exists:
@@ -51,7 +53,7 @@ class TaskManager():
         except:
             print("Something went wrong")
     
-    def delete_task(self, id):
+    def delete_task(self, id: int) -> list:
         """Deletes a task from json file"""
 
         try:
@@ -68,6 +70,8 @@ class TaskManager():
 
                     print(f"Task has been deleted (ID: {del_task['id']})")
                     break
+            else:
+                 print(f"No task has the id {id}")
             
             with open('tasks.json', encoding='utf-8', mode='w') as f:
                 json.dump(tasks, f, indent=2)
@@ -77,8 +81,9 @@ class TaskManager():
         except:
             print("Something went wrong")
     
-    def update_task(self, id, description):
+    def update_task(self, id: int, description: str) -> list:
         """Updates the description of a task"""
+
         try:
             with open('tasks.json', encoding='utf-8', mode='r') as f:
                     tasks = json.load(f)
@@ -95,6 +100,8 @@ class TaskManager():
                     
                     print(f"Task has been updated (ID: {id})")
                     break
+            else:
+                 print(f"No task has the id {id}")
 
             with open('tasks.json', encoding='utf-8', mode='w') as f:
                     json.dump(tasks, f, indent=2)
@@ -102,3 +109,32 @@ class TaskManager():
             return tasks
         except:
             print("Something went wrong")
+
+    def mark_task_done(self, id: str) -> list:
+        """Marks a tasks status as done"""
+
+        with open('tasks.json', encoding='utf-8', mode='r') as f:
+                    tasks = json.load(f)
+                    current_date = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
+
+        if len(tasks) == 0:
+            print("You haven't created any tasks yet to mark")
+            return
+        
+        for task in tasks:
+            if task['id'] == id:
+                task['status'] = self.task_status[0]
+                task['updatedAt'] = current_date
+                    
+                print(f"Task has been marked done (ID: {id})")
+                break
+
+        else:
+             print(f"No task has the id {id}")
+                 
+        with open('tasks.json', encoding='utf-8', mode='w') as f:
+                    json.dump(tasks, f, indent=2)
+
+        return tasks
+
+        

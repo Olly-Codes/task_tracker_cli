@@ -78,7 +78,6 @@ class TestTaskManager(unittest.TestCase):
             with patch("json.dump") as mock_json_dump:
                 test_result = test_task_manager.update_task(1, "Study")
 
-        print(test_result)
         self.assertEqual(test_result[0]['description'], 'Study')
         self.assertNotEqual(test_result[0]['updatedAt'], test_data[0]['updatedAt'])
 
