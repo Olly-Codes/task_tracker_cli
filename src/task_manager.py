@@ -72,7 +72,7 @@ class TaskManager():
             
             print(f"Task has been deleted (ID: {del_task['id']})")
 
-            return del_task
+            return tasks
         
         except:
             print("Something went wrong")

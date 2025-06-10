@@ -24,7 +24,37 @@ class TestTaskManager(unittest.TestCase):
             with patch("json.dump") as mock_json_dump: # prevents actual writing
                 test_result = test_task_manager.add_task("Do some coding")
 
-        print(test_result)
+        # print(test_result)
         self.assertEqual(len(test_result), 1)
         self.assertEqual(test_result[0]['description'], "Do some coding")
         self.assertEqual(test_result[0]['status'], "todo")
+
+    def test_delete_task(self):
+        """Tests if a task has been deleted successfully"""
+        test_path = "test_task.json"
+        test_task_manager = TaskManager(test_path)
+
+        test_data = [
+            {
+                'id': 1,
+                'description': 'Do some coding',
+                'status': 'todo',
+                'createdAt': '10/06/25',
+                'updatedAt': '10/06/25'
+            },
+            {
+                'id': 2,
+                'description': 'Do some coding',
+                'status': 'todo',
+                'createdAt': '10/06/25',
+                'updatedAt': '10/06/25'
+            }
+        ]
+        mocked_open = mock_open(read_data=json.dumps(test_data))
+
+        with patch("builtins.open", mocked_open):
+            with patch("json.dump") as mock_json_dump:
+                test_result = test_task_manager.delete_task(2)
+        
+        print(test_result)
+        self.assertEqual(len(test_result), 1)
