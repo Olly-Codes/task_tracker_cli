@@ -178,27 +178,31 @@ class TaskManager():
             with open('tasks.json', encoding='utf-8', mode='r') as f:
                 tasks = json.load(f)
 
+            filtered_tasks = []
+
             if status == 'all':
                 for task in tasks:
                     self.show_tasks(task)
+                    return task
             elif status == self.task_status[0]:
                 for task in tasks:
                     if task['status'] == 'done':
                         self.show_tasks(task)
+                        filtered_tasks.append(task)
             elif status == self.task_status[1]:
                 for task in tasks:
                     if task['status'] == 'in-progress':
                         self.show_tasks(task)
+                        filtered_tasks.append(task)
             elif status == self.task_status[2]:
                 for task in tasks:
                     if task['status'] == 'todo':
                         self.show_tasks(task)
+                        filtered_tasks.append(task)
             else:
                 print(f"There is no task with the status {status}")
 
         except:
             print("Something went wrong")
 
-        return tasks
-
-        
+        return filtered_tasks

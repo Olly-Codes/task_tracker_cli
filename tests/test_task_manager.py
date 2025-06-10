@@ -14,6 +14,7 @@ class TestTaskManager(unittest.TestCase):
 
     def test_add_task(self):
         """Tests if a task has been added correctly"""
+
         test_path = "test_task.json"
         test_task_manager = TaskManager(test_path)
 
@@ -30,6 +31,7 @@ class TestTaskManager(unittest.TestCase):
 
     def test_delete_task(self):
         """Tests if a task has been deleted successfully"""
+
         test_path = "test_task.json"
         test_task_manager = TaskManager(test_path)
 
@@ -59,6 +61,7 @@ class TestTaskManager(unittest.TestCase):
     
     def test_update_task(self):
         """Tests if a task is updated correctly"""
+
         test_path = "test_task.json"
         test_task_manager = TaskManager(test_path)
 
@@ -83,6 +86,7 @@ class TestTaskManager(unittest.TestCase):
 
     def test_mark_task_done(self):
         """Tests if a task is marked as done"""
+
         test_path = "test_task.json"
         test_task_manager = TaskManager(test_path)
 
@@ -107,6 +111,7 @@ class TestTaskManager(unittest.TestCase):
 
     def test_mark_task_in_progress(self):
         """Tests if a task is marked as in-progress"""
+
         test_path = "test_task.json"
         test_task_manager = TaskManager(test_path)
 
@@ -128,3 +133,54 @@ class TestTaskManager(unittest.TestCase):
         
         self.assertEqual(test_result[0]['status'], 'in-progress')
         self.assertNotEqual(test_result[0]['updatedAt'], test_data[0]['updatedAt'])
+    
+    def test_list_tasks(self):
+        """Tests if tasks are listed correctly"""
+
+        test_path = "test_task.json"
+        test_task_manager = TaskManager(test_path)
+
+        test_data = [
+            {
+                'id': 1,
+                'description': 'Do some coding',
+                'status': 'todo',
+                'createdAt': '10/06/2025 18:19:42',
+                'updatedAt': '10/06/2025 18:19:42'
+            },
+            {
+                'id': 2,
+                'description': 'Do some coding',
+                'status': 'done',
+                'createdAt': '10/06/2025 18:19:42',
+                'updatedAt': '10/06/2025 18:19:42'
+            },
+            {
+                'id': 3,
+                'description': 'Do some coding',
+                'status': 'in-progress',
+                'createdAt': '10/06/2025 18:19:42',
+                'updatedAt': '10/06/2025 18:19:42'
+            },
+            {
+                'id': 4,
+                'description': 'Do some coding',
+                'status': 'in-progress',
+                'createdAt': '10/06/2025 18:19:42',
+                'updatedAt': '10/06/2025 18:19:42'
+            },
+        ]
+
+        mocked_open = mock_open(read_data=json.dumps(test_data))
+
+        with patch("builtins.open", mocked_open):
+            with patch("json.dump") as mock_json_dump:
+                test_result = test_task_manager.list_tasks('done')
+
+        self.assertEqual(len(test_result), 1)
+
+        with patch("builtins.open", mocked_open):
+            with patch("json.dump") as mock_json_dump:
+                test_result = test_task_manager.list_tasks('in-progress')
+
+        self.assertEqual(len(test_result), 2)
