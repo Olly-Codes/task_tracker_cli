@@ -187,7 +187,7 @@ class TaskManager():
             if status == 'all':
                 for task in tasks:
                     self.show_tasks(task)
-                    return task
+                    filtered_tasks.append(task)
             elif status == self.task_status[0]:
                 for task in tasks:
                     if task['status'] == 'done':
