@@ -177,6 +177,10 @@ class TaskManager():
         try:
             with open('tasks.json', encoding='utf-8', mode='r') as f:
                 tasks = json.load(f)
+        
+            if len(tasks) == 0:
+                print("You haven't created any tasks yet to mark")
+                return
 
             filtered_tasks = []
 
