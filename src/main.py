@@ -44,4 +44,4 @@ elif args.commands == 'mark-done':
     task_manager.mark_task_done(args.id)
 elif args.commands == 'mark-in-progress':
     task_manager.path_exists()
-    print(args.id)
+    task_manager.mark_task_in_progress(args.id)

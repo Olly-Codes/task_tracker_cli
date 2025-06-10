@@ -86,8 +86,8 @@ class TaskManager():
 
         try:
             with open('tasks.json', encoding='utf-8', mode='r') as f:
-                    tasks = json.load(f)
-                    current_date = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
+                tasks = json.load(f)
+                current_date = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
 
             if len(tasks) == 0:
                     print("You haven't created any tasks yet to update")
@@ -104,18 +104,18 @@ class TaskManager():
                  print(f"No task has the id {id}")
 
             with open('tasks.json', encoding='utf-8', mode='w') as f:
-                    json.dump(tasks, f, indent=2)
+                json.dump(tasks, f, indent=2)
 
             return tasks
         except:
             print("Something went wrong")
 
-    def mark_task_done(self, id: str) -> list:
+    def mark_task_done(self, id: int) -> list:
         """Marks a tasks status as done"""
 
         with open('tasks.json', encoding='utf-8', mode='r') as f:
-                    tasks = json.load(f)
-                    current_date = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
+            tasks = json.load(f)
+            current_date = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
 
         if len(tasks) == 0:
             print("You haven't created any tasks yet to mark")
@@ -133,8 +133,34 @@ class TaskManager():
              print(f"No task has the id {id}")
                  
         with open('tasks.json', encoding='utf-8', mode='w') as f:
-                    json.dump(tasks, f, indent=2)
+            json.dump(tasks, f, indent=2)
 
+        return tasks
+    
+    def mark_task_in_progress(self, id: int) -> list:
+        """Marks a tasks status in-progress"""
+         
+        with open('tasks.json', encoding='utf-8', mode='r') as f:
+            tasks = json.load(f)
+            current_date = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
+            
+        if len(tasks) == 0:
+            print("You haven't created any tasks yet to mark")
+            return
+        
+        for task in tasks:
+             if task['id'] == id:
+                task['status'] = self.task_status[1]
+                task['updatedAt'] = current_date
+                
+                print(f"Task has been marked in-progress (ID: {id})")
+                break
+        else:
+            print(f"No task has the id {id}")
+
+        with open('tasks.json', encoding='utf-8', mode='w') as f:
+            json.dump(tasks, f, indent=2)
+        
         return tasks
 
         
