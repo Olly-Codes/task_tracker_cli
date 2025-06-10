@@ -24,7 +24,6 @@ class TestTaskManager(unittest.TestCase):
             with patch("json.dump") as mock_json_dump: # prevents actual writing
                 test_result = test_task_manager.add_task("Do some coding")
 
-        # print(test_result)
         self.assertEqual(len(test_result), 1)
         self.assertEqual(test_result[0]['description'], "Do some coding")
         self.assertEqual(test_result[0]['status'], "todo")
@@ -56,5 +55,4 @@ class TestTaskManager(unittest.TestCase):
             with patch("json.dump") as mock_json_dump:
                 test_result = test_task_manager.delete_task(2)
         
-        print(test_result)
         self.assertEqual(len(test_result), 1)

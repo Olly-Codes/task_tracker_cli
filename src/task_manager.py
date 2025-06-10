@@ -1,5 +1,5 @@
 import json
-from datetime import date
+from datetime import datetime
 from pathlib import Path
 
 from task import Task
@@ -26,7 +26,7 @@ class TaskManager():
 
                 with open(self.path, encoding='utf-8', mode='r') as f:
                     tasks = json.load(f)
-                    current_date = date.today().strftime("%d/%m/%Y")
+                    current_date = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
 
                 id = max({task['id'] for task in tasks}, default=0) + 1
                 createdAt = current_date
@@ -65,14 +65,40 @@ class TaskManager():
             for i, task in enumerate(tasks):
                 if task.get('id') == id:
                     del_task = tasks.pop(i)
+
+                    print(f"Task has been deleted (ID: {del_task['id']})")
                     break
             
             with open('tasks.json', encoding='utf-8', mode='w') as f:
                 json.dump(tasks, f, indent=2)
-            
-            print(f"Task has been deleted (ID: {del_task['id']})")
 
             return tasks
         
+        except:
+            print("Something went wrong")
+    
+    def update_task(self, id, description):
+        """Updates the description of a task"""
+        try:
+            with open('tasks.json', encoding='utf-8', mode='r') as f:
+                    tasks = json.load(f)
+                    current_date = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
+
+            if len(tasks) == 0:
+                    print("You haven't created any tasks yet to update")
+                    return
+            
+            for task in tasks:
+                if task['id'] == id:
+                    task['description'] = description
+                    task['updatedAt'] = current_date
+                    
+                    print(f"Task has been updated (ID: {id})")
+                    break
+
+            with open('tasks.json', encoding='utf-8', mode='w') as f:
+                    json.dump(tasks, f, indent=2)
+
+            return tasks
         except:
             print("Something went wrong")
