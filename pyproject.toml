@@ -1,0 +1,19 @@
+[project]
+name = "tasker-x"
+version = "0.1.0"
+description = "A simple CLI for creating and managing tasks"
+readme = "README.md"
+requires-python = ">=3.8"
+authors = [{name = "OllyCodes"}]
+dependencies = []
+
+[project.scripts]
+tasker-x = "tasker_x.main:main"
+
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+packages = ["tasker_x"]

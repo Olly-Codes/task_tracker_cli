@@ -7,7 +7,7 @@ from unittest.mock import mock_open, patch
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), 
                                                 '../src')))
 
-from src.task_manager import TaskManager
+from tasker_x.task_manager import TaskManager
 
 class TestTaskManager(unittest.TestCase):
     """Test cases for Task Manager"""

@@ -2,7 +2,7 @@ import json
 from datetime import datetime
 from pathlib import Path
 
-from task import Task
+from tasker_x.task import Task
 
 class TaskManager():
     """TaskManager manages all the logic of tasks"""
