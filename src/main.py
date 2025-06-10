@@ -26,7 +26,7 @@ mark_in_progress_parser.add_argument('id',type=int,
                               help='id of task to be marked in-progress')
 
 list_parser = subparsers.add_parser('list', help='lists tasks')
-list_parser.add_argument('status', help='status of task')
+list_parser.add_argument('status', nargs='?', default='all', help='status of task')
 
 args = parser.parse_args()
 
@@ -45,3 +45,6 @@ elif args.commands == 'mark-done':
 elif args.commands == 'mark-in-progress':
     task_manager.path_exists()
     task_manager.mark_task_in_progress(args.id)
+elif args.commands == 'list':
+    task_manager.path_exists()
+    task_manager.list_tasks(args.status)

@@ -11,7 +11,7 @@ class TaskManager():
         self.filepath = filepath
         self.path = Path(self.filepath)
 
-        self.task_status = ['done', 'in-progress']
+        self.task_status = ['done', 'in-progress', 'todo']
 
     def path_exists(self) -> bool:
         """Check if file path exists"""
@@ -161,6 +161,44 @@ class TaskManager():
         with open('tasks.json', encoding='utf-8', mode='w') as f:
             json.dump(tasks, f, indent=2)
         
+        return tasks
+    
+    def show_tasks(self, task):
+        print(f"\tID: {task['id']}")
+        print(f"\tDescription: {task['description']}")
+        print(f"\tStatus: {task['status']}")
+        print(f"\tCreated at: {task['createdAt']}")
+        print(f"\tUpdated at: {task['updatedAt']}")
+        print("\n")
+    
+    def list_tasks(self, status: str) -> list:
+        """Lists tasks"""
+
+        try:
+            with open('tasks.json', encoding='utf-8', mode='r') as f:
+                tasks = json.load(f)
+
+            if status == 'all':
+                for task in tasks:
+                    self.show_tasks(task)
+            elif status == self.task_status[0]:
+                for task in tasks:
+                    if task['status'] == 'done':
+                        self.show_tasks(task)
+            elif status == self.task_status[1]:
+                for task in tasks:
+                    if task['status'] == 'in-progress':
+                        self.show_tasks(task)
+            elif status == self.task_status[2]:
+                for task in tasks:
+                    if task['status'] == 'todo':
+                        self.show_tasks(task)
+            else:
+                print(f"There is no task with the status {status}")
+
+        except:
+            print("Something went wrong")
+
         return tasks
 
         
